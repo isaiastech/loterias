@@ -1,0 +1,20 @@
+CREATE TABLE lotofacil (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    concurso INT UNIQUE,
+    data_sorteio DATE,
+    d01 TINYINT,
+    d02 TINYINT,
+    d03 TINYINT,
+    d04 TINYINT,
+    d05 TINYINT,
+    d06 TINYINT,
+    d07 TINYINT,
+    d08 TINYINT,
+    d09 TINYINT,
+    d10 TINYINT,
+    d11 TINYINT,
+    d12 TINYINT,
+    d13 TINYINT,
+    d14 TINYINT,
+    d15 TINYINT
+);

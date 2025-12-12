@@ -1,0 +1,10 @@
+.navbar-brand {
+    font-size: 1.3rem;
+}
+.nav-link.active {
+    font-weight: bold;
+    color: #fff !important;
+}
+.dropdown-menu li a:hover {
+    background-color: #e9ecef;
+}
