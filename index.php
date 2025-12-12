@@ -1,4 +1,3 @@
 <?php 
- echo "Ambiente funcionando corretamente! ";
-
+echo 'Olá, mundo!';
 ?>
