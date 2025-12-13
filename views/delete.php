@@ -2,7 +2,10 @@
 require_once '../vendor/autoload.php';
 
   use class\Conexao;
-
+  use class\Auth; 
+$auth = new Auth();
+$auth->requireAuth(); // só usuário logado pode deletar
+$user = $auth->user();
   $db = new Conexao();
 // Verifica se o ID foi passado
 if (!isset($_GET['id']) || empty($_GET['id'])) {

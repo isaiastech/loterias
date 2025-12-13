@@ -2,6 +2,12 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use class\Conexao;
+use class\Auth;
+
+session_start();
+
+$auth = new Auth();
+$auth->requireAuth(); // só usuário logado pode importar
 
 $db = new Conexao();
 $conn = $db->getConnection();
@@ -10,13 +16,17 @@ $url = "https://servicebus2.caixa.gov.br/portaldeloterias/api/lotofacil";
 $data = file_get_contents($url);
 
 if (!$data) {
-    die("Erro ao acessar a API da Caixa.");
+    $_SESSION['error'] = "Erro ao acessar a API da Caixa.";
+    header("Location: /views/index.php");
+    exit;
 }
 
 $json = json_decode($data, true);
 
-if (!isset($json["listaDezenas"]) || !isset($json["numero"])) {
-    die("Erro: resposta inesperada da API.");
+if (!isset($json["listaDezenas"], $json["numero"])) {
+    $_SESSION['error'] = "Resposta inesperada da API.";
+    header("Location: /views/index.php");
+    exit;
 }
 
 $concurso = (int)$json["numero"];
@@ -24,7 +34,7 @@ $concurso = (int)$json["numero"];
 $dataObj = DateTime::createFromFormat("d/m/Y", $json["dataApuracao"]);
 $dataFormatada = $dataObj->format("Y-m-d");
 
-$dezenas = $json["listaDezenas"]; // 15 dezenas certinho
+$dezenas = $json["listaDezenas"];
 
 $sql = "INSERT INTO lotofacil (
     concurso,
@@ -43,9 +53,7 @@ $stmt = $conn->prepare($sql);
 
 $params = [
     $concurso,
-    $dezenas[0], $dezenas[1], $dezenas[2], $dezenas[3], $dezenas[4],
-    $dezenas[5], $dezenas[6], $dezenas[7], $dezenas[8], $dezenas[9],
-    $dezenas[10], $dezenas[11], $dezenas[12], $dezenas[13], $dezenas[14],
+    ...array_map('intval', $dezenas),
     $dataFormatada
 ];
 
@@ -54,4 +62,6 @@ $types = "i" . str_repeat("i", 15) . "s";
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
 
-echo "Concurso $concurso importado com sucesso!";
+$_SESSION['success'] = "Concurso $concurso importado com sucesso!";
+header("Location: /views/index.php");
+exit;

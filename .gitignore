@@ -1,2 +1,6 @@
 # Ignore the vendor directory
 /vendor/
+
+# Ignorando arquivos de banco de dados
+
+db_completo.sql 

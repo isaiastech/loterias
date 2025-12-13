@@ -1,7 +1,10 @@
 <?php
 require_once '../vendor/autoload.php';
 use class\Conexao;
-
+use class\Auth;
+$auth = new Auth();
+$auth->requireAuth(); // só usuário logado pode atualizar
+$user = $auth->user();
 $db = new Conexao();
 
 $id = $_POST['id'];

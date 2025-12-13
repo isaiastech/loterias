@@ -1,9 +1,12 @@
 <?php 
  require_once '../vendor/autoload.php';
 
-  use class\Conexao;
-
-  $db = new Conexao();
+use class\Conexao;
+use class\Auth;
+$auth = new Auth();
+$auth->requireAuth(); // só usuário logado pode editar
+$user = $auth->user();
+$db = new Conexao();
 $id = $_GET['id'];
 
 $result = $db->getResultFromQuery("SELECT * FROM lotofacil WHERE id = ?", [$id]);
