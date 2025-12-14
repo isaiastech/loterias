@@ -67,7 +67,7 @@ class Auth
     public function requireAuth(): void
     {
         if (!$this->check()) {
-            header("Location: login.php");
+            header("Location: ../index.php");
             exit;
         }
     }
