@@ -16,7 +16,7 @@ class Conexao
 
     private function connect()
     {
-        $envPath = realpath(__DIR__ . '/../config/.env');
+        $envPath = '/var/www/config/.env';
 
         if (!$envPath) {
             throw new Exception("Erro: O arquivo de configuração '.env' não foi encontrado.");
