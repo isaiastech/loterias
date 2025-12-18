@@ -1,6 +1,116 @@
-# Ignore the vendor directory
+# =============================
+
+# PHP / Composer
+
+# =============================
+
 /vendor/
+composer.lock
 
-# Ignorando arquivos de banco de dados
+# =============================
 
-db_completo.sql 
+# Configurações sensíveis
+
+# =============================
+
+.env
+.env.*
+config/*.php
+!config/config.example.php
+
+# =============================
+
+# Cache / Logs
+
+# =============================
+
+/cache/
+/tmp/
+logs/
+*.log
+
+# =============================
+
+# Uploads / Arquivos gerados
+
+# =============================
+
+/uploads/
+/public/uploads/
+/storage/
+
+# =============================
+
+# IDEs / Editores
+
+# =============================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =============================
+
+# Sistema Operacional
+
+# =============================
+
+.DS_Store
+Thumbs.db
+
+# =============================
+
+# Docker (opcional)
+
+# =============================
+
+/docker/mysql/data/
+/docker/mysql/logs/
+
+# =============================
+
+# Node / Frontend (se usar futuramente)
+
+# =============================
+
+node_modules/
+package-lock.json
+yarn.lock
+
+# =============================
+
+# Testes / Debug
+
+# =============================
+
+phpunit.xml
+coverage/
+
+# =============================
+
+# Backup de banco / dumps
+
+# =============================
+
+*.sql
+*.dump
+
+# =============================
+
+# Segurança extra
+
+# =============================
+
+*.key
+*.pem
+*.crt
+
+# =============================
+
+# Exceções importantes
+
+# =============================
+
+!.htaccess
+!public/.htaccess
