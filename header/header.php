@@ -12,7 +12,7 @@ $current = basename($_SERVER['PHP_SELF']);
     <div class="collapse navbar-collapse" id="menuNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-                <a class="nav-link" href="/api/import_lotofacil.php">Cadastrar Sorteio</a>
+                <a class="nav-link" href="/views/analise_lotofacil.php">Analizar Sorteio</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/views/cadastro.php">Cadastrar usuário</a>

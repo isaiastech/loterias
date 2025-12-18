@@ -12,7 +12,7 @@ $auth->requireAuth(); // só usuário logado pode importar
 $db = new Conexao();
 $conn = $db->getConnection();
 
-$url = "https://servicebus2.caixa.gov.br/portaldeloterias/api/lotofacil";
+$url = "https://api.guidi.dev.br/loteria/lotofacil/ultimo";
 $data = file_get_contents($url);
 
 if (!$data) {
