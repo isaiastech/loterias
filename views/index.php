@@ -27,7 +27,6 @@ $auth->requireAuth();
     <div class="d-flex justify-content-between mb-3">
         <h3>Resultados da Lotofácil</h3>
         <div>
-            <a href="create.php" class="btn btn-primary">Novo Sorteio</a>
             <a href="gerador_lotofacil.php" class="btn btn-primary">Gerador Sorteio</a>
         </div>
     </div>

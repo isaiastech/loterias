@@ -79,7 +79,6 @@ foreach ($frequencia as $numero => $qtd) {
     }
 }
 
-
 ?>
 
 <!DOCTYPE html>

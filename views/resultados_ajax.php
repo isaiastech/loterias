@@ -86,7 +86,6 @@ $totalPaginas = ceil($total / $limite);
                 ?>
             </td>
             <td>
-                <a href="edit.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
                 <a href="delete.php?id=<?= $row['id'] ?>"
                    class="btn btn-danger btn-sm"
                    onclick="return confirm('Confirma excluir?')">

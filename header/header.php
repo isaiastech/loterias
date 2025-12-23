@@ -3,7 +3,7 @@ $current = basename($_SERVER['PHP_SELF']);
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-    <a class="navbar-brand fw-bold" href="">
+    <a class="navbar-brand fw-bold" href="index.php">
         🎯 Loterias
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
@@ -19,12 +19,11 @@ $current = basename($_SERVER['PHP_SELF']);
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="menuOutros" data-bs-toggle="dropdown">
-                    Outras Loterias
+                    Lotofacil
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Mega-Sena</a></li>
-                    <li><a class="dropdown-item" href="#">Quina</a></li>
-                    <li><a class="dropdown-item" href="#">Lotomania</a></li>
+                    <li><a class="dropdown-item" href="/views/nova_aposta_lotofacil.php">Nova Aposta</a></li>
+                    <li><a class="dropdown-item" href="/views/conferir_lotofacil.php">Conferir resultados</a></li>
                 </ul>
             </li>
 
