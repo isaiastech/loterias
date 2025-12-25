@@ -23,6 +23,7 @@ $current = basename($_SERVER['PHP_SELF']);
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/views/nova_aposta_lotofacil.php">Nova Aposta</a></li>
+                    <li><a class="dropdown-item" href="/views/minhas_apostas.php">Minhas Apostas</a></li>
                     <li><a class="dropdown-item" href="/views/conferir_lotofacil.php">Conferir resultados</a></li>
                 </ul>
             </li>
