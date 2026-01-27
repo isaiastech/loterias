@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Sao_Paulo');
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'portuguese');
 require_once '../vendor/autoload.php';
 
 use class\Auth;
@@ -6,8 +8,6 @@ use class\Conexao;
 // ===============================
 // CONFIGURAÇÃO DE FUSO HORÁRIO E LOCALE
 // ===============================
-date_default_timezone_set('America/Sao_Paulo');
-setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'portuguese');
 
 // ===============================
 // AUTENTICAÇÃO
@@ -69,12 +69,13 @@ if (empty($_SESSION['csrf_token'])) {
 <div class="container mt-5">
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
-
-            <div class="card shadow-sm">
-
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Cadastrar Aposta - Lotofácil</h5>
+      <div class="col-md-8">
+        
+        <div class="card shadow-sm">
+          
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Cadastrar Aposta - Lotofácil</h5>
+            <?php echo date('d/m/Y H:i:s');?>
                 </div>
 
                 <div class="card-body">
