@@ -2,9 +2,112 @@
 require_once '../vendor/autoload.php';
 
 use class\Auth;
+use class\Conexao;
 
 $auth = new Auth();
 $auth->requireAuth();
+
+$db = new Conexao();
+$conn = $db->getConnection();
+function pegarDadosAPI($url)
+{
+    $ch = curl_init();
+
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_TIMEOUT => 20,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTPHEADER => [
+            "Accept: application/json",
+            "User-Agent: Mozilla/5.0"
+        ]
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    curl_close($ch);
+
+    if ($httpCode !== 200 || !$response) {
+        return false;
+    }
+
+    return $response;
+}
+
+function atualizarLotofacil($conn)
+{
+    // usa API alternativa sem bloqueio
+    $url = "https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest";
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 20,
+        CURLOPT_SSL_VERIFYPEER => false
+    ]);
+    $data = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode !== 200 || !$data) {
+        return;
+    }
+
+    $json = json_decode($data, true);
+    if (!$json) {
+        return;
+    }
+
+    $concurso = (int)($json["concurso"] ?? $json["concurso"] ?? 0);
+
+    $check = $conn->prepare("SELECT concurso FROM lotofacil WHERE concurso=?");
+    $check->bind_param("i", $concurso);
+    $check->execute();
+    $check->store_result();
+    if ($check->num_rows > 0) {
+        return;
+    }
+
+    // algumas APIs retornam campo diferente
+    $dataApuracao = $json["data"] ?? $json["dataApuracao"] ?? null;
+    $dataObj = $dataApuracao ? DateTime::createFromFormat("d/m/Y", $dataApuracao) : null;
+    $dataFormatada = $dataObj ? $dataObj->format("Y-m-d") : null;
+
+    $dezenas = $json["dezenas"] ?? $json["listaDezenas"] ?? [];
+
+    if (count($dezenas) < 15) {
+        return;
+    }
+
+    $sql = "INSERT INTO lotofacil (
+        concurso,
+        d01,d02,d03,d04,d05,
+        d06,d07,d08,d09,d10,
+        d11,d12,d13,d14,d15,
+        data_sorteio
+    ) VALUES (
+        ?,?,?,?,?,?,
+        ?,?,?,?,?,?,
+        ?,?,?,?,?
+    )";
+
+    $stmt = $conn->prepare($sql);
+    $params = [
+        $concurso,
+        ...array_map('intval', $dezenas),
+        $dataFormatada
+    ];
+    $types = "i" . str_repeat("i", 15) . "s";
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+}
+/* EXECUTA AUTOMATICAMENTE */
+atualizarLotofacil($conn);
+
 ?>
 
 <!DOCTYPE html>
@@ -19,11 +122,6 @@ $auth->requireAuth();
 
 <body class="bg-light">
 <div class="container mt-4">
-
-    <form action="/api/import_lotofacil.php" method="post">
-        <button class="btn btn-success mb-3">🔄 Importar último concurso</button>
-    </form>
-
     <div class="d-flex justify-content-between mb-3">
         <h3>Resultados da Lotofácil</h3>
         <div>
