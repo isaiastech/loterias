@@ -3,8 +3,6 @@ require_once '../vendor/autoload.php';
 
 use class\Conexao;
 
-date_default_timezone_set('America/Sao_Paulo');
-
 function pegarDadosAPI($url)
 {
     $ch = curl_init();
