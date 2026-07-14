@@ -51,6 +51,14 @@ if (session_status() === PHP_SESSION_NONE) {
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
+$jogoGerado = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dezenas'])) {
+
+    $jogoGerado = array_map('intval', $_POST['dezenas']);
+    sort($jogoGerado);
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -90,6 +98,7 @@ if (empty($_SESSION['csrf_token'])) {
         </div>
           <div class="card-body">
             <form method="POST" action="salvar_aposta_lotofacil.php">
+              
                         <!-- CSRF -->
               <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                         <!-- Apostador -->
@@ -143,6 +152,9 @@ if (empty($_SESSION['csrf_token'])) {
 </div>
   </div>
 </div>
+<script>
+  const jogoGerado = <?= json_encode($jogoGerado) ?>;
+</script>
 <!-- VALIDAÇÃO EM TEMPO REAL -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -153,7 +165,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const campos = document.getElementById('camposDezenas');
 
     let selecionados = [];
+// Carrega jogo recebido do gerador
+if (jogoGerado.length > 0) {
 
+    selecionados = [...jogoGerado];
+
+    botoes.forEach(btn => {
+
+        const num = parseInt(btn.dataset.num);
+
+        if (selecionados.includes(num)) {
+            btn.classList.add('selecionada');
+        }
+
+    });
+
+    atualizar();
+
+}
     botoes.forEach(btn => {
 
         btn.addEventListener('click', () => {
@@ -205,7 +234,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 </script>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

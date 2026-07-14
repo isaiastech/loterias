@@ -225,15 +225,23 @@ Olá, <strong><?= htmlspecialchars($user['nome']) ?></strong>
 
 <div class="alert alert-success">
 
-<strong>Jogo <?= $i + 1 ?>:</strong>
+    <strong>Jogo <?= $i+1 ?></strong><br>
 
-<?= implode(
-' - ',
-array_map(
-fn($n)=>str_pad($n,2,'0',STR_PAD_LEFT),
-$jogo
-)
-); ?>
+    <?= implode(' - ', array_map(fn($n)=>str_pad($n,2,'0',STR_PAD_LEFT),$jogo)); ?>
+
+    <form action="nova_aposta_lotofacil.php" method="post" class="mt-3">
+
+        <?php foreach($jogo as $n): ?>
+
+            <input type="hidden" name="dezenas[]" value="<?= $n ?>">
+
+        <?php endforeach; ?>
+
+        <button class="btn btn-primary btn-sm">
+            ➕ Incluir este jogo
+        </button>
+
+    </form>
 
 </div>
 
